@@ -1,0 +1,22 @@
+{
+  "name": "human-likely",
+  "owner": {
+    "name": "jt",
+    "email": "REDACTED"
+  },
+  "metadata": {
+    "description": "Skills that make Claude write technical docs in a senior-engineer voice — trade-offs, gotchas, and zero AI fluff.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "human-likely",
+      "source": "./",
+      "description": "humanize-doc skill：把技术文档改写成有人味、有权衡、有踩坑经验的资深工程师口吻。",
+      "version": "0.1.0",
+      "category": "writing",
+      "tags": ["documentation", "writing", "chinese", "technical-writing"],
+      "strict": true
+    }
+  ]
+}
