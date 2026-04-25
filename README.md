@@ -20,7 +20,7 @@
 
 ```bash
 # 1. 添加 marketplace（会读取 .claude-plugin/marketplace.json）
-claude plugin marketplace add https://github.com/jt/human-likely
+claude plugin marketplace add https://github.com/leslieJt/human-likely
 
 # 2. 安装插件
 claude plugin install human-likely@human-likely
@@ -37,7 +37,7 @@ claude plugin install human-likely@human-likely
 clone 之后用 `--plugin-dir` 直接挂载（不走 marketplace，便于改完即时生效）：
 
 ```bash
-git clone https://github.com/jt/human-likely.git
+git clone https://github.com/leslieJt/human-likely.git
 cd /your/project
 claude --plugin-dir /path/to/human-likely
 ```
