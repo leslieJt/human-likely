@@ -1,8 +1,7 @@
 {
   "name": "human-likely",
   "owner": {
-    "name": "jt",
-    "email": "REDACTED"
+    "name": "jt"
   },
   "metadata": {
     "description": "Skills that make Claude write technical docs in a senior-engineer voice — trade-offs, gotchas, and zero AI fluff.",

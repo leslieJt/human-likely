@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "description": "让 Claude 把技术文档改写成「资深工程师写给同事看」的口吻：保留技术严谨，注入决策动机与权衡，删掉 AI 套话。",
   "author": {
-    "name": "jt",
-    "email": "REDACTED"
+    "name": "jt"
   },
   "homepage": "https://github.com/leslieJt/human-likely",
   "repository": "https://github.com/leslieJt/human-likely",
