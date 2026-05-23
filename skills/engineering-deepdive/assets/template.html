@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<!--
+  Engineering Deepdive · HTML 模板
+  ===============================
+
+  这是 engineering-deepdive skill 的实战 CSS 模板，配色已经过实战
+  （warm cream paper + burnt orange accent）。
+
+  使用方法
+  --------
+  1. 把整个 <style> 块复制到你的输出 HTML 的 <head> 里。
+  2. body 结构用下面的占位符替换：
+     - <header class="title"> 含 eyebrow / h1 / sub
+     - <nav class="toc"> 含 .toc-section 分节 + ol/ul
+     - <section id="..."> 每个章节
+  3. 各种 class 见下方"类参考"。
+
+  类参考（按使用频率排序）
+  -----------------------
+  .lede           - 章节首段斜体大字（serif），强调主张
+  .callout         - 默认 callout（橙色边）
+    .callout.info  - 信息（青色）
+    .callout.good  - 正例（绿色）
+    .callout.warn  - 警告（黄色）
+    .callout.bad   - 反例 / 攻击（红色）
+  .naive           - 朴素方案卡片（红 ✗ 自动生成）
+  .answer          - 真实方案卡片（绿 ✓ 自动生成）
+  .diagram         - 图表容器，里面放 .caption + <svg>
+  .kpi-grid        - 数字网格（每个 .kpi 含 .v 大数字 + .k 标签）
+  .path            - 文件路径（橙底圆角小标签）
+  .two-col         - 两列对比卡片
+  h2 .num          - h2 标题里的章节编号（mono 字体）
+  h2 .part         - h2 上方的 part 名（一 · 总览 这种）
+  h3.question      - 问题驱动的章节标题（带 .qnum 红色小标）
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>__TITLE__</title>
+<style>
+:root {
+  --bg: #fafaf7;
+  --bg-elev: #ffffff;
+  --bg-soft: #f7f3eb;
+  --fg: #1a1a1a;
+  --fg-dim: #555;
+  --fg-muted: #888;
+  --accent: #b8470c;
+  --accent-2: #1f5d5a;
+  --accent-3: #6a3c91;
+  --accent-light: #f4e6dc;
+  --accent-2-light: #e1ecea;
+  --border: #e3e3dd;
+  --code-bg: #f4f1ea;
+  --code-fg: #2d2d2d;
+  --good: #2d6e3e;
+  --warn: #a86b00;
+  --bad: #a8190e;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
+  --serif: ui-serif, "Iowan Old Style", "Source Serif Pro", "Apple Garamond", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.74;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.container {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+
+/* Title block */
+header.title {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 28px;
+  margin-bottom: 40px;
+}
+header.title .eyebrow {
+  color: var(--accent);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+header.title h1 {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+header.title .sub {
+  color: var(--fg-dim);
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Table of contents */
+nav.toc {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px 28px;
+  margin-bottom: 48px;
+  font-size: 14.5px;
+}
+nav.toc h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-muted);
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+nav.toc .toc-section {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+nav.toc .toc-section:first-of-type { margin-top: 0; }
+nav.toc ul, nav.toc ol { margin: 0; padding: 0; list-style: none; }
+nav.toc li { padding: 4px 0; }
+nav.toc li .q {
+  display: inline-block;
+  min-width: 32px;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+}
+nav.toc a { color: var(--fg); text-decoration: none; border-bottom: 1px solid transparent; }
+nav.toc a:hover { border-bottom-color: var(--accent); }
+
+/* Sections / headings */
+section { margin-bottom: 56px; }
+section h2 {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 700;
+  margin: 60px 0 22px;
+  letter-spacing: -0.005em;
+  scroll-margin-top: 24px;
+  border-left: 4px solid var(--accent);
+  padding-left: 14px;
+  line-height: 1.35;
+}
+section h2 .part {
+  display: block;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+section h2 .num {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 18px;
+  margin-right: 12px;
+  vertical-align: 4px;
+  font-weight: 500;
+}
+section h3.question {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  margin: 48px 0 14px;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  scroll-margin-top: 24px;
+  line-height: 1.4;
+}
+section h3.question .qnum {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 2px 9px;
+  border-radius: 4px;
+  margin-right: 10px;
+  vertical-align: 4px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+section h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 36px 0 12px;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+}
+section h4 { font-size: 16px; font-weight: 700; margin: 24px 0 10px; }
+
+/* Prose */
+p { margin: 0 0 14px; }
+ul, ol { margin: 0 0 16px; padding-left: 22px; }
+ul li, ol li { margin-bottom: 6px; }
+.lede {
+  font-size: 17.5px;
+  color: var(--fg-dim);
+  line-height: 1.78;
+  font-family: var(--serif);
+  margin-bottom: 18px;
+}
+
+/* Code */
+code {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 1px 6px;
+  border-radius: 4px;
+  word-break: break-word;
+}
+pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 16px 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+  margin: 16px 0;
+  border: 1px solid var(--border);
+}
+pre code { background: transparent; padding: 0; border-radius: 0; font-size: inherit; }
+
+/* Inline path/file labels */
+.path {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Callouts — 4 semantic variants */
+.callout {
+  background: var(--bg-elev);
+  border-left: 4px solid var(--accent);
+  padding: 16px 22px;
+  margin: 20px 0;
+  border-radius: 0 6px 6px 0;
+}
+.callout.warn { border-left-color: var(--warn); background: #fdf7e9; }
+.callout.good { border-left-color: var(--good); background: #f0f7ed; }
+.callout.bad  { border-left-color: var(--bad);  background: #fde8e6; }
+.callout.info { border-left-color: var(--accent-2); background: var(--accent-2-light); }
+.callout h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+.callout.warn h4 { color: var(--warn); }
+.callout.good h4 { color: var(--good); }
+.callout.bad  h4 { color: var(--bad); }
+.callout.info h4 { color: var(--accent-2); }
+.callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14.5px;
+}
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+th {
+  background: var(--bg-elev);
+  font-weight: 600;
+  color: var(--fg);
+  border-bottom: 2px solid var(--border);
+}
+tr:hover td { background: rgba(184, 71, 12, 0.03); }
+
+/* Figure container */
+.diagram {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 28px 0;
+  overflow-x: auto;
+}
+.diagram .caption {
+  font-size: 12.5px;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin-bottom: 14px;
+  text-align: center;
+  font-family: var(--mono);
+}
+.diagram svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+
+/* KPI grid for showcase numbers (1x / N× / 0× …) */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 22px 0;
+}
+.kpi {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.kpi .v {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+}
+.kpi .k {
+  font-size: 12px;
+  color: var(--fg-muted);
+  margin-top: 4px;
+  letter-spacing: 0.03em;
+}
+
+/* Two-column comparison cards */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 20px 0;
+}
+.two-col > div {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+}
+.two-col h4 {
+  margin-top: 0;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+/* Naive (✗) vs Answer (✓) cards */
+.naive {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin: 8px 0;
+  position: relative;
+  padding-left: 60px;
+}
+.naive::before {
+  content: "✗";
+  position: absolute;
+  left: 18px;
+  top: 10px;
+  font-size: 22px;
+  color: var(--bad);
+  font-weight: 700;
+}
+.naive .title { font-weight: 700; margin-bottom: 4px; }
+.naive .why { color: var(--fg-dim); font-size: 14px; }
+
+.answer {
+  background: linear-gradient(to right, #fff8e8, var(--bg-elev));
+  border: 1px solid #f1d39c;
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin: 8px 0;
+  position: relative;
+  padding-left: 60px;
+}
+.answer::before {
+  content: "✓";
+  position: absolute;
+  left: 18px;
+  top: 10px;
+  font-size: 22px;
+  color: var(--good);
+  font-weight: 700;
+}
+.answer .title { font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  margin-top: 72px;
+  padding-top: 24px;
+  color: var(--fg-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Misc */
+hr.thin { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+@media (max-width: 640px) {
+  .container { padding: 32px 18px 72px; }
+  .two-col { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ====== 标题区 ====== -->
+<header class="title">
+  <div class="eyebrow">__EYEBROW__</div>
+  <h1>__H1__</h1>
+  <p class="sub">__SUB__</p>
+</header>
+
+<!-- ====== 目录 ====== -->
+<nav class="toc">
+  <h3>目录</h3>
+  <div class="toc-section">一、总览</div>
+  <ul>
+    <li><a href="#overview">__OVERVIEW_TITLE__</a></li>
+  </ul>
+  <div class="toc-section">二、核心问题</div>
+  <ul>
+    <li><span class="q">Q1</span><a href="#q1">__Q1__</a></li>
+    <!-- 重复 Q2..QN -->
+  </ul>
+  <div class="toc-section">三、合一</div>
+  <ul>
+    <li><a href="#dataflow">__DATAFLOW_TITLE__</a></li>
+    <li><a href="#wrap">__WRAP_TITLE__</a></li>
+  </ul>
+</nav>
+
+<!-- ====== 总览 ====== -->
+<section id="overview">
+<h2><span class="part">一 · 总览</span>__OVERVIEW_H2__</h2>
+<p class="lede">__OVERVIEW_LEDE__</p>
+
+<div class="diagram">
+<div class="caption">Figure 1 · __FIG1_CAPTION__</div>
+<svg viewBox="0 0 880 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 总览图：物理布局 / 数据流 / 模块关系，三选一 -->
+</svg>
+</div>
+
+<div class="callout info">
+<h4>读完这张图能拿走什么</h4>
+<ul>
+  <li>__TAKEAWAY_1__</li>
+  <li>__TAKEAWAY_2__</li>
+  <li>下面 N 个问题逐层把这张图的每一条线 / 每一个框背后的工程取舍拆出来</li>
+</ul>
+</div>
+</section>
+
+<!-- ====== Q1 ====== -->
+<section id="questions">
+<h2><span class="part">二 · 分</span>核心问题</h2>
+
+<h3 class="question" id="q1"><span class="qnum">Q1</span>__Q1_TITLE__</h3>
+
+<p>__Q1_INTRO__</p>
+
+<div class="naive">
+  <div class="title">方案 A · __NAIVE_A_TITLE__</div>
+  <div class="why">__NAIVE_A_WHY__</div>
+</div>
+
+<div class="naive">
+  <div class="title">方案 B · __NAIVE_B_TITLE__</div>
+  <div class="why">__NAIVE_B_WHY__</div>
+</div>
+
+<div class="answer">
+  <div class="title">__ANSWER_TITLE__</div>
+  <p style="margin:6px 0 0 0; line-height: 1.7;">__ANSWER_BODY__</p>
+</div>
+
+<!-- 可选配图 -->
+<div class="diagram">
+<div class="caption">Figure N · __FIGN_CAPTION__</div>
+<svg viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- ... -->
+</svg>
+</div>
+
+<div class="callout">
+<h4>核心亮点</h4>
+<p>__CORE_HIGHLIGHT__</p>
+</div>
+
+<!-- ====== 重复 Q2..QN ====== -->
+
+</section>
+
+<!-- ====== 合一 ====== -->
+<section id="dataflow">
+<h2><span class="part">三 · 合一</span>__DATAFLOW_H2__</h2>
+<p class="lede">__DATAFLOW_LEDE__</p>
+
+<div class="diagram">
+<div class="caption">Figure N · 单轮 / 整体数据流（X 轴 = 时间）</div>
+<svg viewBox="0 0 940 580" xmlns="http://www.w3.org/2000/svg">
+  <!-- swimlane 时序图 -->
+</svg>
+</div>
+
+<table>
+<tr><th>时点</th><th>钩子</th><th>对应 Q</th></tr>
+<tr><td>T1</td><td>__</td><td>Q1</td></tr>
+</table>
+
+<div class="kpi-grid">
+  <div class="kpi"><div class="v">1×</div><div class="k">__K1__</div></div>
+  <div class="kpi"><div class="v">N×</div><div class="k">__K2__</div></div>
+  <div class="kpi"><div class="v">0×</div><div class="k">__K3__</div></div>
+</div>
+</section>
+
+<section id="wrap">
+<h2><span class="part">三 · 合一</span>一句话总结 + 隐性契约</h2>
+
+<div class="callout info">
+<h4>一句话总结</h4>
+<p style="font-size: 16px; line-height: 1.75;">__SUMMARY__</p>
+</div>
+
+<h3>三条 __DOMAIN__ 开发者要记住的隐性契约</h3>
+<ol>
+<li>__CONTRACT_1__</li>
+<li>__CONTRACT_2__</li>
+<li>__CONTRACT_3__</li>
+</ol>
+
+<h3>设计哲学的几个反射点</h3>
+<ul>
+<li>__PHILO_1__</li>
+<li>__PHILO_2__</li>
+<li>__PHILO_3__</li>
+</ul>
+</section>
+
+<hr class="thin">
+
+<footer>
+<p>__FOOTER__</p>
+</footer>
+
+</div>
+</body>
+</html>
