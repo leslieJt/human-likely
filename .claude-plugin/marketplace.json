@@ -4,17 +4,17 @@
     "name": "jt"
   },
   "metadata": {
-    "description": "Skills that make Claude write technical docs in a senior-engineer voice — trade-offs, gotchas, and zero AI fluff.",
-    "version": "0.1.0"
+    "description": "Skills that make Claude write technical docs in a senior-engineer voice — trade-offs, gotchas, and zero AI fluff. Two complementary skills: humanize-doc (improve existing docs) and engineering-deepdive (write deep architecture analyses from scratch).",
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "human-likely",
       "source": "./",
-      "description": "humanize-doc skill：把技术文档改写成有人味、有权衡、有踩坑经验的资深工程师口吻。",
-      "version": "0.1.0",
+      "description": "Two skills for senior-engineer technical writing. humanize-doc: 改写已有文档去 AI 味。engineering-deepdive: 从零写问题驱动 + 总分合结构 + SVG 图的技术深度剖析。",
+      "version": "0.2.0",
       "category": "writing",
-      "tags": ["documentation", "writing", "chinese", "technical-writing"],
+      "tags": ["documentation", "writing", "chinese", "technical-writing", "architecture", "deep-dive"],
       "strict": true
     }
   ]
